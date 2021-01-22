@@ -66,7 +66,7 @@ if __name__ == "__main__":
         for point in route:
             h = geohash.encode(point[1], point[0], 7)
             if h in mat_ix:
-                matrix[mat_ix[h]] = 1
+                matrix[mat_ix[h]] = 255
 
 
         #plt.matshow(matrix)
@@ -74,4 +74,4 @@ if __name__ == "__main__":
         matrices.append(matrix)
 
     matrices = np.array(matrices)
-    np.save('data/routes_matrix.npy', matrices)
+    np.save('data/routes_matrix_grey.npy', matrices)

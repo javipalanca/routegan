@@ -12,16 +12,15 @@ from tensorflow.keras.layers import (Dense,
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    train_images = np.load('data/routes_matrix.npy')
+    train_images = np.load('data/routes_matrix_grey.npy')
+    train_images = train_images[:10]
     print(f"loaded {train_images.shape}")
 
     # underscore to omit the label arrays
     # (train_images, train_labels), (_, _) = train_test_split(X, [x for x in range(len(X))], test_size=0.3, random_state=42)
 
-    # print(f"train: {len(train_images)}, test: {len(tr)}")
-
     train_images = train_images.reshape(train_images.shape[0], 128, 128, 1).astype('float32')
-    # train_images = (train_images - 127.5) / 127.5  # Normalize the images to [-1, 1]
+    train_images = (train_images - 127.5) / 127.5  # Normalize the images to [-1, 1]
 
     BUFFER_SIZE = 60000
     BATCH_SIZE = 256
@@ -184,6 +183,7 @@ if __name__ == "__main__":
         # This is so all layers run in inference mode (batchnorm).
         # 1 - Generate images
         predictions = model(test_input, training=False)
+        print("Predictions: ", predictions[0, :, :, 0] * 127.5 + 127.5)
         # 2 - Plot the generated images
         fig = plt.figure(figsize=(4, 4))
         for i in range(predictions.shape[0]):
